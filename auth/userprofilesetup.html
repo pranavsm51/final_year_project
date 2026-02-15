@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile Setup</title>
+    <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <header class="navbar">
+    <div class="logo">
+        <a href="../index.html">
+            <img src="../logo.png" alt="FitBite Logo">        
+        </a>
+    </div>
+  </header>
+  <div class="auth-page">
+  <div class="auth-container profile-setup">
+
+    <h2>Complete Your Profile</h2>
+    <p>Help us personalize your nutrition journey</p>
+
+    <!-- ===== GOAL SELECTION ===== -->
+    <h3 class="goal-title">Select Your Goal</h3>
+
+    <div class="goal-grid">
+
+      <label class="goal-card">
+        <input type="radio" name="goal" value="Weight Loss" required>
+        <img src="../weightloss.jpg" alt="">
+        <span>Weight Loss</span>
+      </label>
+
+      <label class="goal-card">
+        <input type="radio" name="goal" value="Muscle Gain">
+        <img src="../musclegain.jpg" alt="">
+        <span>Muscle Gain</span>
+      </label>
+
+      <label class="goal-card">
+        <input type="radio" name="goal" value="Diabetic Friendly">
+        <img src="../diabetic.jpg" alt="">
+        <span>Diabetic Friendly</span>
+      </label>
+
+      <label class="goal-card">
+        <input type="radio" name="goal" value="Balanced Diet">
+        <img src="../balancedweight.jpg" alt="">
+        <span>Balanced Diet</span>
+      </label>
+
+    </div>
+
+    <!-- ===== BMI FORM ===== -->
+    <form onsubmit="calculateBMI(event)">
+
+      <label>Height (cm)</label>
+      <input type="number" id="height" placeholder="e.g. 175" required>
+
+      <label>Weight (kg)</label>
+      <input type="number" id="weight" placeholder="e.g. 70" required>
+
+      <button type="submit">Calculate BMI</button>
+
+    </form>
+
+    <!-- ===== BMI RESULT ===== -->
+    <div id="bmi-result" class="bmi-box">
+      <h3>Your BMI</h3>
+      <div id="bmi-value" class="bmi-number">--</div>
+      <p id="bmi-category" class="bmi-category"></p>
+
+      <div class="bmi-actions">
+        <a href="../meals.html" class="btn-primary1">View Recommended Meals</a>
+        <a href="../index.html" class="btn-outline">Go to Home</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function calculateBMI(event) {
+  event.preventDefault();
+
+  const height = document.getElementById("height").value / 100;
+  const weight = document.getElementById("weight").value;
+
+  const bmi = (weight / (height * height)).toFixed(1);
+
+  document.getElementById("bmi-value").textContent = bmi;
+
+  let category = "";
+
+  if (bmi < 18.5) category = "Underweight";
+  else if (bmi < 25) category = "Normal weight";
+  else if (bmi < 30) category = "Overweight";
+  else category = "Obese";
+
+  document.getElementById("bmi-category").textContent = category;
+  document.getElementById("bmi-result").style.display = "block";
+
+  // smooth scroll to result
+  document.getElementById("bmi-result").scrollIntoView({
+    behavior: "smooth"
+  });
+}
+</script>
+</body>
+</html>

@@ -94,7 +94,7 @@
     <h2>Who Can Join FitBite?</h2>
     <div class="role-cards">
         <div class="auth-card">
-            <img src="userlogin.jpg">
+            <img src="users.jpg">
             <h3>Users</h3>
             <p>Order personalized healthy meals based on your goals.</p>
         </div>
@@ -111,6 +111,180 @@
     </div>
 </section>
 
+<!-- ===== FitBite AI Coach ===== -->
+<div class="fitbite-chatbot">
+
+  <!-- Floating Button -->
+  <button class="chat-toggle" onclick="toggleChat()">
+    <i class="fa-solid fa-robot"></i>
+  </button>
+
+  <!-- Chat Window -->
+  <div class="chat-window" id="chatWindow">
+
+    <div class="chat-header">
+      <div class="chat-title">
+        <strong>FitBite AI Coach</strong>
+        <span>Your nutrition assistant</span>
+      </div>
+      <button class="chat-close" onclick="toggleChat()">×</button>
+    </div>
+<div id="chatMessages" class="chat-messages">
+
+  <div class="chat-msg bot">
+    Hi! I'm your FitBite AI Coach 👋
+  </div>
+
+  <div class="chat-msg bot">
+    Ask me about meals, calories, or fitness goals.
+  </div>
+
+  <div id="typingIndicator" class="typing-indicator" style="display:none;">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+</div>
+
+    
+    <div id="chatMessages" class="chat-messages">
+
+<div id="typingIndicator" class="typing-indicator" style="display:none;">
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
+    </div>
+   <div class="chat-input-area">
+
+  <!-- Reset Chat Button -->
+  <button class="home-btn" onclick="resetChat()">
+  <i class="fa-solid fa-house"></i>
+</button>
+
+
+<textarea id="chatInput"
+  rows="1"
+  placeholder="Type your message..."
+  oninput="autoResize(this)"
+  onkeydown="handleEnter(event)"></textarea>
+
+  <button class="chat-send" onclick="sendMessage()">Send</button>
+
+</div>
+
+
+  </div>
+</div>
+<script>
+function toggleChat() {
+  const chat = document.getElementById("chatWindow");
+  chat.style.display =
+    chat.style.display === "flex" ? "none" : "flex";
+}
+
+// simple AI responses
+function sendMessage() {
+  const input = document.getElementById("chatInput");
+  const message = input.value.trim();
+  const chatMessages = document.getElementById("chatMessages");
+  const typing = document.getElementById("typingIndicator");
+
+  if (!message) return;
+
+  // ✅ User message
+  const userMsg = document.createElement("div");
+  userMsg.className = "chat-msg user";
+  userMsg.textContent = message;
+  chatMessages.appendChild(userMsg);
+
+  input.value = "";
+  scrollChatToBottom();
+
+  // ✅ Show typing indicator
+  typing.style.display = "flex";
+  chatMessages.appendChild(typing);
+  scrollChatToBottom();
+
+  // ✅ Bot thinking delay (real feel)
+  setTimeout(() => {
+    typing.style.display = "none";
+
+    const botMsg = document.createElement("div");
+    botMsg.className = "chat-msg bot";
+    botMsg.textContent = getBotReply(message);
+
+    chatMessages.appendChild(botMsg);
+    scrollChatToBottom();
+  }, 900 + Math.random() * 700); // natural delay
+}
+
+
+
+// basic smart replies
+
+function getBotReply(msg) {
+  const text = msg.toLowerCase();
+
+  if (text.includes("hi") || text.includes("hello")) {
+    return "Hey! 👋 I'm FitBite AI. How can I help you today?";
+  }
+
+  if (text.includes("meal")) {
+    return "You can explore our Meals section to find the perfect fit for your goals.";
+  }
+
+  if (text.includes("bmi")) {
+    return "You can calculate your BMI in your profile setup to get personalized recommendations.";
+  }
+
+  if (text.includes("protein")) {
+    return "For high protein meals, check our High-Protein category 💪";
+  }
+
+  if (text.includes("weight loss")) {
+    return "For weight loss, I recommend Low-Carb or Light Meals sections.";
+  }
+
+  return "I’m here to help with meals, nutrition plans, and fitness goals. What would you like to explore?";
+}
+
+function resetChat() {
+  const chatMessages = document.getElementById("chatMessages");
+
+  chatMessages.innerHTML = `
+    <div class="chat-msg bot">
+      Hi! I'm your FitBite AI Coach 👋
+    </div>
+    <div class="chat-msg bot">
+      Ask me about meals, calories, or fitness goals.
+    </div>
+    <div id="typingIndicator" class="typing-indicator" style="display:none;">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  `;
+}
+
+const chatInput = document.getElementById("chatInput");
+
+function handleEnter(e) {
+  if (e.key === "Enter" && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+}
+function scrollChatToBottom() {
+  const messages = document.getElementById("chatMessages");
+  messages.scrollTop = messages.scrollHeight;
+}
+function autoResize(el) {
+  el.style.height = "auto";
+  el.style.height = Math.min(el.scrollHeight, 90) + "px";
+}
+</script>
 <footer>
     <p>© 2026 FitBite | Final Year Project</p>
 </footer>
